@@ -1,379 +1,219 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ULTIMATE BRAINROT STRETCHER 🧠☢️</title>
+    <title>واتساب المباشر</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@900&family=Rubik+Mono+One&display=swap');
-        
         body {
-            background-color: #050505;
-            color: white;
             font-family: 'Cairo', sans-serif;
-            overflow-x: hidden;
-        }
-
-        .neon-text {
-            color: #fff;
-            text-shadow: 0 0 7px #fff, 0 0 21px #f0f, 0 0 42px #0fa;
-            animation: pulsate 1.5s infinite alternate;
-        }
-
-        @keyframes pulsate {
-            100% { text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 40px #0fa, 0 0 100px #0fa; }
-            0% { text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 10px #f0f, 0 0 45px #f0f; }
-        }
-
-        .canvas-container {
-            position: relative;
-            max-width: 100%;
-            border-radius: 24px;
-            box-shadow: 0 0 20px rgba(0, 255, 170, 0.2);
-            background: repeating-conic-gradient(#111 0% 25%, #000 0% 50%) 50% / 20px 20px;
-            border: 2px solid #0fa;
-            overflow: hidden;
+            background-color: #000000;
+            color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
 
-        canvas {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            image-rendering: pixelated;
-        }
-
-        .btn-neon {
-            background: transparent;
-            color: #0fa;
-            border: 1px solid #0fa;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            font-weight: 900;
-        }
-
-        .btn-neon:hover {
-            background: #0fa;
-            color: #000;
-            box-shadow: 0 0 15px #0fa;
-            transform: scale(1.02);
-        }
-
-        .active-filter {
-            background: #0fa !important;
-            color: #000 !important;
-            box-shadow: 0 0 30px #0fa !important;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #0fa; border-radius: 10px; }
-
-        .grid-bg {
-            background-image: 
-                linear-gradient(rgba(0, 255, 170, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 170, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
-
-        .control-group {
-            background: rgba(20, 20, 20, 0.8);
-            border: 1px solid rgba(0, 255, 170, 0.2);
-            padding: 1rem;
-            border-radius: 1rem;
-        }
-
-        input[type=range] {
-            accent-color: #0fa;
+        .container {
             width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* شريط اختيار الدولة */
+        .segmented-control {
+            display: flex;
+            background-color: #111111;
+            padding: 4px;
+            border-radius: 14px;
+            gap: 4px;
+        }
+
+        .segment {
+            flex: 1;
+            padding: 12px 8px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #777777;
+            transition: all 0.2s ease;
+        }
+
+        .segment.active {
+            background-color: #ffffff;
+            color: #000000;
+            font-weight: 700;
+        }
+
+        /* حقل الإدخال */
+        .input-group {
+            background-color: #000000;
+            border: 1px solid #222222;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            padding: 4px;
+        }
+
+        .prefix-display {
+            padding: 0 16px;
+            color: #555555;
+            font-family: monospace;
+            font-size: 18px;
+            border-left: 1px solid #222222;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 16px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            outline: none;
+            font-family: monospace;
+        }
+
+        /* الزر الرمادي للتجهيز */
+        .secondary-button {
+            background-color: #111111;
+            color: #eeeeee;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #222222;
+            transition: all 0.2s;
+        }
+
+        /* الزر الأبيض للذهاب (يظهر لاحقاً) */
+        .primary-button {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .primary-button:active {
+            transform: scale(0.96);
+        }
+
+        .hidden { display: none; }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body class="grid-bg min-h-screen p-4 md:p-8">
+<body>
 
-    <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <header class="text-center mb-10">
-            <h1 class="text-5xl md:text-7xl font-black mb-2 neon-text italic uppercase tracking-tighter">
-                BRAINROT STRETCHER
-            </h1>
-            <p class="text-[#0fa] font-bold tracking-[0.2em] animate-pulse text-xs md:text-sm">
-                SYSTEM STATUS: CRITICAL ERROR // SHITPOST LEVEL: MAXIMUM
-            </p>
-        </header>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
-            <!-- Workspace (Center) -->
-            <div class="lg:col-span-8 order-1 lg:order-1 flex flex-col gap-4">
-                <div id="drop-zone" class="canvas-container min-h-[500px] cursor-pointer border-dashed hover:bg-[#0fa]/5 transition-all group">
-                    <div id="placeholder-text" class="text-center p-10">
-                        <div class="text-8xl mb-6 opacity-50 group-hover:scale-125 transition-transform duration-500">💀</div>
-                        <p class="text-[#0fa] text-xl font-black uppercase tracking-widest">اسحب الضحية إلى هنا أو اضغط للرفع</p>
-                    </div>
-                    <canvas id="main-canvas" class="hidden"></canvas>
-                </div>
-
-                <div class="flex gap-4">
-                    <button id="download-btn" class="hidden flex-1 py-4 bg-[#0fa] text-black font-black text-xl rounded-xl hover:shadow-[0_0_40px_#0fa] transition-all uppercase italic">تحميل المسخ 💾</button>
-                    <button id="reset-btn" class="hidden px-8 py-4 bg-white text-black font-black text-xl rounded-xl hover:bg-gray-200 transition-all uppercase italic text-sm">الأصل 🔄</button>
-                </div>
-            </div>
-
-            <!-- Side Controls (Right) -->
-            <div class="lg:col-span-4 order-2 lg:order-2 space-y-4 max-h-[85vh] overflow-y-auto pr-2 custom-scrollbar">
-                
-                <!-- Color & FX Section -->
-                <div class="control-group">
-                    <h2 class="text-[#0fa] font-black text-sm mb-4 border-b border-[#0fa]/30 pb-2">☢️ مختبر التدمير اللوني (FX)</h2>
-                    <div class="grid grid-cols-2 gap-2 mb-4">
-                        <button onclick="setEffect('deepfry')" class="btn-neon p-3 rounded-lg">DEEP FRY 🔥</button>
-                        <button onclick="setEffect('nuked')" class="btn-neon p-3 rounded-lg">NUKED ☢️</button>
-                        <button onclick="setEffect('cursed')" class="btn-neon p-3 rounded-lg">CURSED 👁️</button>
-                        <button onclick="setEffect('moldy')" class="btn-neon p-3 rounded-lg">MOLDY 🍄</button>
-                        <button onclick="setEffect('invert')" class="btn-neon p-3 rounded-lg">DEMONIC 👹</button>
-                        <button onclick="setEffect('shitpost')" class="btn-neon p-3 rounded-lg">LO-FI 💩</button>
-                    </div>
-                    <div class="space-y-3">
-                        <div>
-                            <span class="text-[10px] text-[#0fa]/70 uppercase">تخريب الألوان (Saturate)</span>
-                            <input type="range" id="satRange" min="0" max="1000" value="100" oninput="draw()">
-                        </div>
-                        <div>
-                            <span class="text-[10px] text-[#0fa]/70 uppercase">درجة القلي (Contrast)</span>
-                            <input type="range" id="conRange" min="0" max="1000" value="100" oninput="draw()">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stretching Section -->
-                <div class="control-group">
-                    <h2 class="text-fuchsia-500 font-black text-sm mb-4 border-b border-fuchsia-500/30 pb-2">📏 تشويه الأبعاد (STRETCH)</h2>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="setStretch('wide')" class="btn-neon p-3 rounded-lg border-fuchsia-500 text-fuchsia-500 hover:bg-fuchsia-500">WIDE ↔️</button>
-                        <button onclick="setStretch('tall')" class="btn-neon p-3 rounded-lg border-fuchsia-500 text-fuchsia-500 hover:bg-fuchsia-500">TALL ↕️</button>
-                        <button onclick="setStretch('wave')" class="btn-neon p-3 rounded-lg border-fuchsia-500 text-fuchsia-500 hover:bg-fuchsia-500">WAVE 🌊</button>
-                        <button onclick="setStretch('bulge')" class="btn-neon p-3 rounded-lg border-fuchsia-500 text-fuchsia-500 hover:bg-fuchsia-500">BULGE 🎈</button>
-                        <button onclick="setStretch('melt')" class="btn-neon p-3 rounded-lg border-fuchsia-500 text-fuchsia-500 hover:bg-fuchsia-500">MELT 🫠</button>
-                        <button onclick="setStretch('perspective')" class="btn-neon p-3 rounded-lg border-fuchsia-500 text-fuchsia-500 hover:bg-fuchsia-500">POINTY 📐</button>
-                    </div>
-                    <div class="mt-4">
-                        <span class="text-[10px] text-fuchsia-500/70 uppercase">قوة التشويه</span>
-                        <input type="range" id="stretchPower" min="0" max="200" value="50" oninput="draw()">
-                    </div>
-                </div>
-
-                <!-- Danger Zone -->
-                <div class="control-group border-red-500/50">
-                    <button onclick="applyChaos()" class="w-full p-4 rounded-xl text-center font-black text-sm border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-black transition-all shadow-[0_0_15px_rgba(239,68,68,0.2)]">
-                        تدمير عشوائي (TOTAL CHAOS) ☣️
-                    </button>
-                </div>
-
-                <input type="file" id="file-input" class="hidden" accept="image/*">
-            </div>
-        </div>
+<div class="container">
+    <!-- الأيقونة -->
+    <div class="text-center mb-2">
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" style="margin: 0 auto;">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
     </div>
 
-    <script>
-        const canvas = document.getElementById('main-canvas');
-        const ctx = canvas.getContext('2d');
-        const fileInput = document.getElementById('file-input');
-        const dropZone = document.getElementById('drop-zone');
-        const placeholder = document.getElementById('placeholder-text');
-        const downloadBtn = document.getElementById('download-btn');
-        const resetBtn = document.getElementById('reset-btn');
-        
-        // Controls
-        const satRange = document.getElementById('satRange');
-        const conRange = document.getElementById('conRange');
-        const stretchPower = document.getElementById('stretchPower');
+    <!-- اختيار الدولة -->
+    <div class="segmented-control">
+        <div class="segment active" data-code="966">السعودية</div>
+        <div class="segment" data-code="971">الإمارات</div>
+        <div class="segment" data-code="965">الكويت</div>
+        <div class="segment" data-code="20">مصر</div>
+    </div>
 
-        let originalImage = null;
-        let currentEffect = 'none';
-        let currentStretch = 'none';
+    <!-- حقل الرقم مع إظهار الرمز -->
+    <div class="input-group">
+        <div id="prefixLabel" class="prefix-display">+966</div>
+        <input type="tel" id="phoneNumber" placeholder="5xxxxxxxx" autocomplete="off">
+    </div>
 
-        // --- Core Logic ---
-        dropZone.onclick = () => fileInput.click();
-        fileInput.onchange = (e) => handleFile(e.target.files[0]);
+    <!-- زر التجهيز -->
+    <button id="prepBtn" onclick="prepareLink()" class="secondary-button">
+        تجهيز الرابط
+    </button>
 
-        function handleFile(file) {
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    originalImage = img;
-                    canvas.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                    downloadBtn.classList.remove('hidden');
-                    resetBtn.classList.remove('hidden');
-                    draw();
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
+    <!-- الزر النهائي للذهاب (مخفي في البداية) -->
+    <div id="resultBox" class="hidden fade-in">
+        <a id="finalLink" href="#" target="_blank" class="primary-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.067 2.877 1.215 3.076.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            انتقل إلى واتساب
+        </a>
+    </div>
+</div>
 
-        function setEffect(eff) {
-            currentEffect = eff;
-            if(eff === 'deepfry') { satRange.value = 500; conRange.value = 400; }
-            if(eff === 'nuked') { satRange.value = 1000; conRange.value = 800; }
-            draw();
-        }
+<script>
+    let selectedCode = "966";
 
-        function setStretch(str) {
-            currentStretch = str;
-            draw();
-        }
+    // تفعيل أزرار الدولة
+    const segments = document.querySelectorAll('.segment');
+    const prefixLabel = document.getElementById('prefixLabel');
 
-        function resetAll() {
-            currentEffect = 'none';
-            currentStretch = 'none';
-            satRange.value = 100;
-            conRange.value = 100;
-            stretchPower.value = 50;
-            draw();
-        }
-        resetBtn.onclick = resetAll;
-
-        function draw() {
-            if (!originalImage) return;
-
-            const power = parseInt(stretchPower.value);
-            const w = originalImage.width;
-            const h = originalImage.height;
-
-            // Step 1: Handle Dimensions
-            let finalW = w;
-            let finalH = h;
-            if (currentStretch === 'wide') finalW = w * (1 + power/100);
-            if (currentStretch === 'tall') finalH = h * (1 + power/100);
-
-            canvas.width = finalW;
-            canvas.height = finalH;
-
-            // Step 2: Apply Color Filters
-            let filterStr = `saturate(${satRange.value}%) contrast(${conRange.value}%)`;
-            if (currentEffect === 'cursed') filterStr += ' hue-rotate(90deg) invert(20%)';
-            if (currentEffect === 'invert') filterStr += ' invert(100%) hue-rotate(180deg)';
-            if (currentEffect === 'moldy') filterStr += ' sepia(0.8) hue-rotate(50deg) blur(1px)';
-            if (currentEffect === 'nuked') filterStr += ' brightness(1.5) contrast(1000%)';
-            ctx.filter = filterStr;
-
-            // Step 3: Draw base or complex stretch
-            if (['wave', 'melt', 'perspective', 'bulge', 'shitpost'].includes(currentStretch) || currentEffect === 'shitpost') {
-                renderComplexEffects(originalImage, finalW, finalH, power);
-            } else {
-                ctx.drawImage(originalImage, 0, 0, finalW, finalH);
-            }
-        }
-
-        function renderComplexEffects(img, w, h, power) {
-            ctx.drawImage(img, 0, 0, w, h);
-            const imgData = ctx.getImageData(0, 0, w, h);
-            ctx.clearRect(0, 0, w, h);
-
-            if (currentStretch === 'wave') {
-                for (let y = 0; y < h; y++) {
-                    const xOff = Math.sin(y / (20 - power/10)) * power;
-                    ctx.drawImage(img, 0, y, img.width, 1, xOff, y, w, 1);
-                }
-            } 
-            else if (currentStretch === 'melt') {
-                ctx.drawImage(img, 0, 0, w, h);
-                for (let x = 0; x < w; x++) {
-                    const yOff = Math.random() * power;
-                    ctx.drawImage(img, (x/w)*img.width, 0, 1, img.height, x, yOff, 1, h);
-                }
-            }
-            else if (currentStretch === 'perspective') {
-                for (let y = 0; y < h; y++) {
-                    const rowW = w * ( (1 - power/200) + (y / h) * (power/100));
-                    ctx.drawImage(img, 0, (y/h)*img.height, img.width, 1, (w - rowW)/2, y, rowW, 1);
-                }
-            }
-            else if (currentStretch === 'bulge') {
-                applyBulgeEffect(img, w, h, power);
-            }
+    segments.forEach(seg => {
+        seg.addEventListener('click', () => {
+            segments.forEach(s => s.classList.remove('active'));
+            seg.classList.add('active');
+            selectedCode = seg.getAttribute('data-code');
+            prefixLabel.innerText = "+" + selectedCode;
             
-            if (currentEffect === 'shitpost') {
-                addShitpostCompression(w, h);
-            }
-        }
-
-        function applyBulgeEffect(img, w, h, power) {
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = w; tempCanvas.height = h;
-            const tCtx = tempCanvas.getContext('2d');
-            tCtx.drawImage(img, 0, 0, w, h);
-            
-            const strength = power / 100;
-            const centerX = w / 2;
-            const centerY = h / 2;
-            const radius = Math.min(w, h) / 1.5;
-
-            const sourceData = tCtx.getImageData(0, 0, w, h);
-            const outData = ctx.createImageData(w, h);
-
-            for (let y = 0; y < h; y++) {
-                for (let x = 0; x < w; x++) {
-                    let dx = x - centerX; let dy = y - centerY;
-                    let dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < radius) {
-                        let factor = Math.pow(Math.sin(Math.PI * dist / (2 * radius)), -strength);
-                        let sx = centerX + dx * factor;
-                        let sy = centerY + dy * factor;
-                        if (sx >= 0 && sx < w && sy >= 0 && sy < h) {
-                            let sIdx = (Math.floor(sy) * w + Math.floor(sx)) * 4;
-                            let dIdx = (y * w + x) * 4;
-                            for(let i=0; i<4; i++) outData.data[dIdx+i] = sourceData.data[sIdx+i];
-                        }
-                    } else {
-                        let idx = (y * w + x) * 4;
-                        for(let i=0; i<4; i++) outData.data[idx+i] = sourceData.data[idx+i];
-                    }
-                }
-            }
-            ctx.putImageData(outData, 0, 0);
-        }
-
-        function addShitpostCompression(w, h) {
-            const small = document.createElement('canvas');
-            small.width = w/8; small.height = h/8;
-            const sCtx = small.getContext('2d');
-            sCtx.drawImage(canvas, 0, 0, small.width, small.height);
-            ctx.imageSmoothingEnabled = false;
-            ctx.drawImage(small, 0, 0, w, h);
-        }
-
-        function applyChaos() {
-            if(!originalImage) return;
-            satRange.value = Math.random() * 1000;
-            conRange.value = Math.random() * 1000;
-            stretchPower.value = Math.random() * 200;
-            const effects = ['deepfry', 'nuked', 'cursed', 'moldy', 'invert', 'shitpost'];
-            const stretches = ['wide', 'tall', 'wave', 'bulge', 'melt', 'perspective'];
-            currentEffect = effects[Math.floor(Math.random()*effects.length)];
-            currentStretch = stretches[Math.floor(Math.random()*stretches.length)];
-            draw();
-        }
-
-        downloadBtn.onclick = () => {
-            const link = document.createElement('a');
-            link.download = `BRAINROT_${Date.now()}.png`;
-            link.href = canvas.toDataURL();
-            link.click();
-        };
-
-        // Drag & Drop Support
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eName => {
-            dropZone.addEventListener(eName, e => { e.preventDefault(); e.stopPropagation(); }, false);
+            // إخفاء زر النتيجة عند تغيير الدولة لإعادة التجهيز
+            document.getElementById('resultBox').classList.add('hidden');
         });
-        dropZone.addEventListener('drop', (e) => handleFile(e.dataTransfer.files[0]));
-    </script>
+    });
+
+    function prepareLink() {
+        let phone = document.getElementById('phoneNumber').value.trim();
+        const resultBox = document.getElementById('resultBox');
+        const finalLink = document.getElementById('finalLink');
+
+        // تنظيف
+        phone = phone.replace(/\D/g, '');
+        if (phone.startsWith('0')) phone = phone.substring(1);
+
+        if (phone.length < 5) {
+            alert("يرجى إدخال رقم صحيح");
+            return;
+        }
+
+        // إنشاء الرابط
+        const url = `https://wa.me/${selectedCode}${phone}`;
+        finalLink.href = url;
+
+        // إظهار الزر
+        resultBox.classList.remove('hidden');
+    }
+
+    // دعم Enter للتجهيز
+    document.getElementById('phoneNumber').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') prepareLink();
+    });
+</script>
+
 </body>
 </html>
+
+```
